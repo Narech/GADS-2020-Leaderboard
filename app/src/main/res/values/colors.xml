@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorAccentDark">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="gris_1">#fff0f0f0</color>
+    <color name="gris_2">#e9e6e6</color>
+    <color name="gris_3">#ffc0c0c0</color>
+    <color name="gris_4">#ff808080</color>
+    <color name="gris_5">#ff535353</color>
+    <color name="gris_6">#ff2a2a2a</color>
+    <color name="gris_7">#ff090909</color>
+</resources>
