@@ -15,7 +15,7 @@ public class SkillIQLeaderViewModel extends ViewModel {
     private MutableLiveData<ArrayList<SkillIQLeader>> list_skillIQ_leader;
     private SkillIQLeaderRepository skillIQLeaderRepository;
 
-    public void setList_learning_leader(String bearer_token){
+    public void setList_learning_leader(){
 
         skillIQLeaderRepository = SkillIQLeaderRepository.getInstance().getInstance();
         list_skillIQ_leader = skillIQLeaderRepository.getLearningLeader();

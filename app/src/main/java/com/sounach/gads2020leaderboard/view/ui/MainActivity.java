@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ListLearningLeaderFragment(), "Voyages");
-        adapter.addFragment( new ListLearningLeaderFragment(), "Expéditions");
+        adapter.addFragment(new ListLearningLeaderFragment(), "Learning Leaders");
+        adapter.addFragment( new ListSkillQILeaderFragment(), "Skill QI Leaders");
         viewPager.setAdapter(adapter);
     }
 
