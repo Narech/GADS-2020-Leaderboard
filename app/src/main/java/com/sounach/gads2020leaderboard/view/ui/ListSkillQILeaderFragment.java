@@ -101,7 +101,7 @@ public class ListSkillQILeaderFragment extends Fragment {
     private void loadList() {
       binding.swipe.setRefreshing(true);
       binding.layoutLoading.parent.setVisibility(GONE);
-        String jsonListRequest = sessionManager.getData("list_leaders");
+        String jsonListRequest = sessionManager.getData("list_skills");
         if (jsonListRequest != null) {
             leaders = gson.fromJson(jsonListRequest, new TypeToken<ArrayList<SkillIQLeader>>() {
             }.getType());
@@ -127,7 +127,7 @@ public class ListSkillQILeaderFragment extends Fragment {
                         binding.layoutLoading.messageLoading.setVisibility(View.VISIBLE);
                         binding.swipe.setRefreshing(false);
                     } else {
-                        sessionManager.setData("list_leaders", gson.toJson(leaders));
+                        sessionManager.setData("list_skills", gson.toJson(leaders));
                         learningSkillIQIAdapter = new LearningSkillIQIAdapter(leaders, getActivity());
                         learningSkillIQIAdapter.notifyDataSetChanged();
                         setupRecyclerView();

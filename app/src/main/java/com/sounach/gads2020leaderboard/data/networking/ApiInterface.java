@@ -7,7 +7,9 @@ import com.sounach.gads2020leaderboard.data.model.SkillIQLeader;
 import java.util.ArrayList;
 
 import retrofit2.Call;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 public interface ApiInterface {
     @GET("hours")
@@ -15,6 +17,8 @@ public interface ApiInterface {
 
     @GET("skilliq")
     Call<ArrayList<SkillIQLeader>> getSkillIQLeader();
+
+
 
 
 
