@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Leaderboard</string>
+    <string name="echec_chargement">Echec du chargement!</string>
+    <string name="reessayer">Réessayer</string>
 </resources>

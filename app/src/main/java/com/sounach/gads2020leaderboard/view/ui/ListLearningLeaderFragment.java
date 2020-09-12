@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sounach.gads2020leaderboard.R;
@@ -55,8 +57,6 @@ public class ListLearningLeaderFragment extends Fragment {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_list, container, false);
         rootView = binding.getRoot();
-
-
         initUI();
         setListeners();
         return rootView;
@@ -116,30 +116,47 @@ public class ListLearningLeaderFragment extends Fragment {
             @Override
             public void onChanged(@Nullable ArrayList<LearningLeader> list_leaders) {
                 leaders = list_leaders;
-                if (leaders.isEmpty()) {
-                    binding.list.setVisibility(View.GONE);
-                    binding.layoutLoading.parent.setVisibility(View.VISIBLE);
-                    binding.layoutLoading.loading.setVisibility(View.GONE);
-                    binding.layoutLoading.messageLoading.setText("Aucun leader enregistré pour le moment");
-                    binding.layoutLoading.messageLoading.setVisibility(View.VISIBLE);
-                    binding.swipe.setRefreshing(false);
+                if (leaders == null) {
+                    onResponseFailure("");
                 } else {
-                    sessionManager.setData("list_leaders", gson.toJson(leaders));
-                    learningLeaderAdapter = new LearningLeaderAdapter(leaders, getActivity());
-                    learningLeaderAdapter.notifyDataSetChanged();
-                    setupRecyclerView();
+                    if (leaders.isEmpty()) {
+                        binding.list.setVisibility(View.GONE);
+                        binding.layoutLoading.parent.setVisibility(View.VISIBLE);
+                        binding.layoutLoading.loading.setVisibility(View.GONE);
+                        binding.layoutLoading.messageLoading.setText("Aucun leader enregistré pour le moment");
+                        binding.layoutLoading.messageLoading.setVisibility(View.VISIBLE);
+                        binding.swipe.setRefreshing(false);
+                    } else {
+                        sessionManager.setData("list_leaders", gson.toJson(leaders));
+                        learningLeaderAdapter = new LearningLeaderAdapter(leaders, getActivity());
+                        learningLeaderAdapter.notifyDataSetChanged();
+                        setupRecyclerView();
+                    }
                 }
 
             }
         });
 
-
        }
 
+    public void onResponseFailure(String message) {
+        Snackbar snackbar;
+        if(message.equals("")){
+            snackbar = Snackbar.make(binding.parent, getString(R.string.echec_chargement), Snackbar.LENGTH_LONG);
+        }else{
+            snackbar = Snackbar.make(binding.parent, message, Snackbar.LENGTH_LONG);
+        }
+        View snackbarView = snackbar.getView();
+        snackbar.setAction(getString(R.string.reessayer), new View.OnClickListener()
+        {
+            public void onClick(View view)
+            {
+                loadList();
 
-
-
-
-
+            }
+        });
+        snackbarView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+        snackbar.show();
+    }
 
 }

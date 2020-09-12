@@ -6,8 +6,11 @@
     android:background="@mipmap/splash_screen_background"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
+    android:paddingTop="@dimen/double_margin"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include
+        layout="@layout/custom_toolbar"/>
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
@@ -16,7 +19,7 @@
         android:paddingRight="@dimen/half_margin"
         android:paddingLeft="@dimen/half_margin"
         android:paddingTop="@dimen/half_margin"
-        app:tabIndicatorHeight="@dimen/huit_margin"
+        app:tabIndicatorHeight="@dimen/quart_margin"
         app:tabMode="fixed"
         app:tabGravity="fill"/>
     <androidx.viewpager.widget.ViewPager

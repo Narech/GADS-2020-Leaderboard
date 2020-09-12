@@ -13,4 +13,7 @@
     <color name="gris_5">#ff535353</color>
     <color name="gris_6">#ff2a2a2a</color>
     <color name="gris_7">#ff090909</color>
+
+    <color name="orange">#ff7f00</color>
+    <color name="orangeDark">#E5B067</color>
 </resources>

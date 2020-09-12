@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sounach.gads2020leaderboard">
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logo_andela"
@@ -10,6 +9,8 @@
         android:roundIcon="@mipmap/logo_andela"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
+        <activity android:name=".view.ui.SubmitActivity"
+            android:theme="@style/NoActionBar"></activity>
         <activity android:name=".view.ui.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,10 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ui.MainActivity"
-            android:theme="@style/AppTheme">
-
-        </activity>
+        <activity
+            android:name=".view.ui.MainActivity"
+            android:theme="@style/NoActionBar"></activity>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
