@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ListLearningLeaderFragment(), "Learning Leaders");
-        adapter.addFragment( new ListSkillQILeaderFragment(), "Skill QI Leaders");
+        adapter.addFragment(new ListLearningLeaderFragment(), getString(R.string.learning_leaders));
+        adapter.addFragment( new ListSkillQILeaderFragment(), getString(R.string.Skill_IQ_leaders));
         viewPager.setAdapter(adapter);
     }
 

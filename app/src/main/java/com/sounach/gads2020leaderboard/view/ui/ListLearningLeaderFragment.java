@@ -123,7 +123,7 @@ public class ListLearningLeaderFragment extends Fragment {
                         binding.list.setVisibility(View.GONE);
                         binding.layoutLoading.parent.setVisibility(View.VISIBLE);
                         binding.layoutLoading.loading.setVisibility(View.GONE);
-                        binding.layoutLoading.messageLoading.setText("Aucun leader enregistré pour le moment");
+                        binding.layoutLoading.messageLoading.setText(R.string.msg_failed_chargement);
                         binding.layoutLoading.messageLoading.setVisibility(View.VISIBLE);
                         binding.swipe.setRefreshing(false);
                     } else {

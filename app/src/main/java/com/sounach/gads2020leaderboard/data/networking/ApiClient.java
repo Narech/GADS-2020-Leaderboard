@@ -36,4 +36,14 @@ public class ApiClient {
     public static <S> S createService(Class<S> serviceClass) {
         return retrofit.create(serviceClass);
     }
+
+    private static Retrofit retrofit1 = new Retrofit.Builder()
+            .baseUrl(BASE_URL_1)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build();
+
+    public static <S> S createService1(Class<S> serviceClass) {
+        return retrofit1.create(serviceClass);
+    }
 }

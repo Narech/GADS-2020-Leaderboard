@@ -2,4 +2,13 @@
     <string name="app_name">Leaderboard</string>
     <string name="echec_chargement">Echec du chargement!</string>
     <string name="reessayer">Réessayer</string>
+    <string name="msg_failed_chargement">Aucun leader enregistré pour le moment</string>
+    <string name="learning_leaders">Learning Leaders</string>
+    <string name="Skill_IQ_leaders">Skill QI Leaders</string>
+    <string name="submission_failed">Submission not Sucessful</string>
+    <string name="submission_successful">Submission Sucessful</string>
+    <string name="msg_error_project_link">Veuiller rensigner le lien de votre projet</string>
+    <string name="msg_error_mail">Veuiller rensigner un email correct</string>
+    <string name="msg_error_last_name">Veuiller rensigner votre nom</string>
+    <string name="msg_error_first_name">Veuiller rensigner votre prénom</string>
 </resources>

@@ -1,10 +1,13 @@
 package com.sounach.gads2020leaderboard.view.ui;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -19,18 +22,27 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sounach.gads2020leaderboard.R;
+import com.sounach.gads2020leaderboard.data.model.SkillIQLeader;
 import com.sounach.gads2020leaderboard.utilities.SessionManager;
+import com.sounach.gads2020leaderboard.utilities.Utils;
+import com.sounach.gads2020leaderboard.viewmodel.SkillIQLeaderViewModel;
+import com.sounach.gads2020leaderboard.viewmodel.SubmissionViewModel;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class SubmitActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private Button btn_submit;
     public static AlertDialog dialog;
+    private ProgressBar loading;
+    public SubmissionViewModel submissionViewModel;
+    public TextView first_name, last_name, email, project_link;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +58,12 @@ public class SubmitActivity extends AppCompatActivity {
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        loading = (ProgressBar) findViewById(R.id.loading);
         btn_submit = (Button) findViewById(R.id.btn_submit);
+        first_name = (TextView) findViewById(R.id.first_name);
+        last_name = (TextView) findViewById(R.id.last_name);
+        email = (TextView) findViewById(R.id.email);
+        project_link = (TextView) findViewById(R.id.project_link);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -58,7 +75,33 @@ public class SubmitActivity extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialogResponse(0,1);
+                if(first_name.getText().toString().trim().isEmpty()){
+                    first_name.setError(getString(R.string.msg_error_first_name));
+                    first_name.requestFocus();
+                    return;
+                }
+                if(last_name.getText().toString().trim().isEmpty()){
+                    last_name.setError(getString(R.string.msg_error_last_name));
+                    last_name.requestFocus();
+                    return;
+                }
+                if(email.getText().toString().trim().isEmpty()){
+                    email.setError(getString(R.string.msg_error_mail));
+                    email.requestFocus();
+                    return;
+                }
+                if(!(Utils.isValidEmail(email.getText().toString().trim()))){
+                    email.setError(getString(R.string.msg_error_mail));
+                    email.requestFocus();
+                    return;
+                }
+                if(project_link.getText().toString().trim().isEmpty()){
+                    project_link.setError(getString(R.string.msg_error_project_link));
+                    project_link.requestFocus();
+                    return;
+                }
+
+                showDialogResponse(0,0);
             }
         });
     }
@@ -79,11 +122,11 @@ public class SubmitActivity extends AppCompatActivity {
             close.setVisibility(View.VISIBLE);
             message_confirm.setVisibility(View.VISIBLE);
         }else{
-            if(rslt==0){
-                result_confirm.setText("Submission Sucessful");
+            if(rslt==1){
+                result_confirm.setText(R.string.submission_successful);
                 result.setBackgroundResource(R.drawable.ic_success);
             }else{
-                result_confirm.setText("Submission not Sucessful");
+                result_confirm.setText(R.string.submission_failed);
                 result.setBackgroundResource(R.drawable.ic_failed);
             }
             result_confirm.setVisibility(View.VISIBLE);
@@ -92,6 +135,34 @@ public class SubmitActivity extends AppCompatActivity {
             close.setVisibility(View.GONE);
             message_confirm.setVisibility(View.GONE);
         }
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+                loading.setVisibility(View.GONE);
+            }
+        });
+        btn_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+                loading.setVisibility(View.VISIBLE);
+                submissionViewModel = ViewModelProviders.of(SubmitActivity.this).get(SubmissionViewModel.class);
+                submissionViewModel.requestSubmission(first_name.getText().toString().trim(),last_name.getText().toString().trim(),email.getText().toString().trim(),project_link.getText().toString().trim());
+                submissionViewModel.submission().observe(SubmitActivity.this, new Observer<Integer>() {
+                    @Override
+                    public void onChanged(@Nullable Integer submission) {
+                        loading.setVisibility(View.GONE);
+                        if (submission == null) {
+                            showDialogResponse(1,0);
+                        } else {
+                            showDialogResponse(1,1);
+                        }
+
+                    }
+                });
+            }
+        });
         adb.setView(alertDialogView);
 
         dialog = adb.create();
